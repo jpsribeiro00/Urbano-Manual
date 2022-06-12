@@ -13,7 +13,7 @@ public class Estoque extends BaseEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private Residencia Residencia;
 
-    @OneToMany(mappedBy="Produto")
+    @OneToMany(mappedBy="Estoque")
     private List<Produto> Produtos;
 
     public Long getId() {

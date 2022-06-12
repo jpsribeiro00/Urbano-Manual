@@ -16,12 +16,12 @@ public class Produto extends BaseEntity {
     @Column(nullable=false)
     private double ValorUnitario;
 
-    @JoinColumn(name = "produto_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Produto.class, fetch = FetchType.LAZY)
-    private Produto Produto;
+    @JoinColumn(name = "estoque_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Estoque.class, fetch = FetchType.LAZY)
+    private Estoque Estoque;
 
-    @JoinColumn(name = "produto_id")
-    private Long produto_id;
+    @JoinColumn(name = "estoque_id")
+    private Long estoque_id;
 
     public Long getId() {
         return super.getId();
@@ -36,11 +36,11 @@ public class Produto extends BaseEntity {
     }
 
     @JsonIgnore
-    public Models.Produto getProduto() {
-        return Produto;
+    public Models.Estoque getEstoque() {
+        return Estoque;
     }
-    public Long getProdutoId(){
-        return produto_id;
+    public Long getEstoqueId(){
+        return estoque_id;
     }
 
     public void setId(Long id) {
@@ -55,12 +55,12 @@ public class Produto extends BaseEntity {
         ValorUnitario = valorUnitario;
     }
 
-    public void setProdutoId(Long id){
-        this.produto_id = id;
+    public void setEstoqueId(Long id){
+        this.estoque_id = id;
     }
     @JsonIgnore
-    public void setProduto(Models.Produto produto) {
-        setProdutoId(Produto.getId());
-        this.Produto = produto;
+    public void setEstoque(Models.Estoque estoque) {
+        setEstoqueId(estoque.getId());
+        this.Estoque = estoque;
     }
 }
