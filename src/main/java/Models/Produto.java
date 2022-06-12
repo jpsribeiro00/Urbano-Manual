@@ -1,11 +1,9 @@
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -18,8 +16,12 @@ public class Produto extends BaseEntity {
     @Column(nullable=false)
     private double ValorUnitario;
 
-    @ManyToOne
+    @JoinColumn(name = "produto_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Produto.class, fetch = FetchType.LAZY)
     private Produto Produto;
+
+    @JoinColumn(name = "produto_id")
+    private Long produto_id;
 
     public Long getId() {
         return super.getId();
@@ -33,8 +35,12 @@ public class Produto extends BaseEntity {
         return ValorUnitario;
     }
 
+    @JsonIgnore
     public Models.Produto getProduto() {
         return Produto;
+    }
+    public Long getProdutoId(){
+        return produto_id;
     }
 
     public void setId(Long id) {
@@ -49,7 +55,12 @@ public class Produto extends BaseEntity {
         ValorUnitario = valorUnitario;
     }
 
+    public void setProdutoId(Long id){
+        this.produto_id = id;
+    }
+    @JsonIgnore
     public void setProduto(Models.Produto produto) {
-        Produto = produto;
+        setProdutoId(Produto.getId());
+        this.Produto = produto;
     }
 }

@@ -1,11 +1,9 @@
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -18,8 +16,12 @@ public class Renda extends BaseEntity{
     @Column(nullable=false)
     private double Valor;
 
-    @ManyToOne
+    @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
     private Pessoa Pessoa;
+
+    @JoinColumn(name = "pessoa_id")
+    private Long pessoa_id;
 
     public Long getId() {
         return super.getId();
@@ -32,9 +34,12 @@ public class Renda extends BaseEntity{
     public double getValor() {
         return Valor;
     }
-
+    @JsonIgnore
     public Models.Pessoa getPessoa() {
         return Pessoa;
+    }
+    public Long getPessoaId(){
+        return pessoa_id;
     }
 
     public void setId(Long id) {
@@ -49,7 +54,12 @@ public class Renda extends BaseEntity{
         Valor = valor;
     }
 
+    public void setPessoaId(Long id){
+        this.pessoa_id = id;
+    }
+    @JsonIgnore
     public void setPessoa(Models.Pessoa pessoa) {
-        Pessoa = pessoa;
+        setPessoaId(pessoa.getId());
+        this.Pessoa = pessoa;
     }
 }

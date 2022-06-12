@@ -1,5 +1,7 @@
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,8 +16,12 @@ public class Movel extends BaseEntity{
     @Column(nullable=false)
     private String Quantidade;
 
-    @ManyToOne
+    @JoinColumn(name = "comodo_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Comodo.class, fetch = FetchType.LAZY)
     private Comodo Comodo;
+
+    @JoinColumn(name = "comodo_id")
+    private Long comodo_id;
 
     public Long getId() {
         return super.getId();
@@ -29,8 +35,12 @@ public class Movel extends BaseEntity{
         return Quantidade;
     }
 
-    public Models.Comodo getComodo() {
+    @JsonIgnore
+    public Models.Comodo getcomodo() {
         return Comodo;
+    }
+    public Long getComodoId(){
+        return comodo_id;
     }
 
     public void setId(Long id) {
@@ -45,7 +55,12 @@ public class Movel extends BaseEntity{
         Quantidade = quantidade;
     }
 
+    public void setcomodoId(Long id){
+        this.comodo_id = id;
+    }
+    @JsonIgnore
     public void setComodo(Models.Comodo comodo) {
-        Comodo = comodo;
+        setcomodoId(Comodo.getId());
+        this.Comodo = comodo;
     }
 }

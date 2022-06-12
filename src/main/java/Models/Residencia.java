@@ -1,17 +1,10 @@
 package Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -22,8 +15,7 @@ public class Residencia extends BaseEntity{
     @Column(nullable=false)
     private String Endereco;
 
-    @OneToOne
-    @JoinColumn(name="fk_estoque")
+    @OneToOne(mappedBy = "Residencia", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private Estoque Estoque;
 
     @OneToMany(mappedBy="Residencia")
@@ -32,8 +24,12 @@ public class Residencia extends BaseEntity{
     @OneToMany(mappedBy="Residencia")
     private List<Conta> Contas;
 
-    @ManyToOne
+    @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
     private Pessoa Pessoa;
+
+    @JoinColumn(name = "pessoa_id")
+    private Long pessoa_id;
 
     public Long getId() {
         return super.getId();
@@ -55,8 +51,12 @@ public class Residencia extends BaseEntity{
         return Contas;
     }
 
-    public Long getPessoaId() {
-        return Pessoa.getId();
+    @JsonIgnore
+    public Models.Pessoa getPessoa() {
+        return Pessoa;
+    }
+    public Long getPessoaId(){
+        return pessoa_id;
     }
 
     public void setId(Long id) {
@@ -79,7 +79,12 @@ public class Residencia extends BaseEntity{
         Contas = contas;
     }
 
-    public void setPessoaId(long pessoaId) {
-        Pessoa.setId(pessoaId);
+    public void setPessoaId(Long id){
+        this.pessoa_id = id;
+    }
+    @JsonIgnore
+    public void setPessoa(Models.Pessoa pessoa) {
+        setPessoaId(pessoa.getId());
+        this.Pessoa = pessoa;
     }
 }

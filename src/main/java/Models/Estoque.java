@@ -2,20 +2,15 @@ package Models;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
 public class Estoque extends BaseEntity{
 
-    @OneToOne(mappedBy = "Estoque")
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Residencia Residencia;
 
     @OneToMany(mappedBy="Produto")

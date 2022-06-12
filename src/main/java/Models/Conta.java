@@ -1,13 +1,10 @@
 package Models;
 
 import Enum.Enums;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -22,8 +19,12 @@ public class Conta extends BaseEntity{
 
     private double Valor;
 
-    @ManyToOne
+    @JoinColumn(name = "residencia_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY)
     private Residencia Residencia;
+
+    @JoinColumn(name = "residencia_id")
+    private Long residencia_id;
 
     public void setId(Long id) {
         super.setId(id);
@@ -39,10 +40,6 @@ public class Conta extends BaseEntity{
 
     public void setValor(double valor) {
         Valor = valor;
-    }
-
-    public void setConta(Models.Residencia residencia) {
-        Residencia = residencia;
     }
 
     public Long getId() {
@@ -61,7 +58,19 @@ public class Conta extends BaseEntity{
         return Valor;
     }
 
-    public Models.Residencia getConta() {
+    @JsonIgnore
+    public Models.Residencia getResidencia() {
         return Residencia;
+    }
+    public Long getResidenciaId(){
+        return residencia_id;
+    }
+    public void setResidenciaId(Long id){
+        this.residencia_id = id;
+    }
+    @JsonIgnore
+    public void setResidencia(Models.Residencia residencia) {
+        setResidenciaId(Residencia.getId());
+        this.Residencia = residencia;
     }
 }
