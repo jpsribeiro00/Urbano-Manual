@@ -55,8 +55,8 @@ public class Residencia extends BaseEntity{
         return Contas;
     }
 
-    public Models.Pessoa getPessoa() {
-        return Pessoa;
+    public Long getPessoaId() {
+        return Pessoa.getId();
     }
 
     public void setId(Long id) {
@@ -79,7 +79,7 @@ public class Residencia extends BaseEntity{
         Contas = contas;
     }
 
-    public void setPessoa(Models.Pessoa pessoa) {
-        Pessoa = pessoa;
+    public void setPessoaId(long pessoaId) {
+        Pessoa.setId(pessoaId);
     }
 }
