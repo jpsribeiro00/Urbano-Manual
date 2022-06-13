@@ -19,7 +19,7 @@ public class Comodo extends BaseEntity {
     @Column(nullable=false)
     private Enums.ClassificacaoMovel ClassificacaoMovel;
 
-    @OneToMany(mappedBy="Comodo")
+    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Comodo")
     private List<Movel> Moveis;
 
     @JoinColumn(name = "residencia_id", insertable = false, updatable = false)

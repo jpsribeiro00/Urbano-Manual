@@ -2,13 +2,7 @@ package Models;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -23,10 +17,10 @@ public class Pessoa extends BaseEntity{
 
     private String Idade;
 
-    @OneToMany(mappedBy="Pessoa")
+    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Pessoa")
     private List<Renda> Rendas;
 
-    @OneToMany(mappedBy="Pessoa")
+    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Pessoa")
     private List<Residencia> Residencias;
 
     public Long getId() {
