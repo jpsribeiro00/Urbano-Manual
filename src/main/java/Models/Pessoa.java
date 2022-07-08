@@ -17,10 +17,12 @@ public class Pessoa extends BaseEntity{
 
     private String Idade;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Pessoa")
+    private String Senha;
+
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Pessoa")
     private List<Renda> Rendas;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Pessoa")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Pessoa")
     private List<Residencia> Residencias;
 
     public Long getId() {
@@ -38,6 +40,9 @@ public class Pessoa extends BaseEntity{
     public String getIdade() {
         return Idade;
     }
+    public String getSenha() {
+        return Senha;
+    }
 
     public List<Renda> getRendas() {
         return Rendas;
@@ -53,6 +58,10 @@ public class Pessoa extends BaseEntity{
 
     public void setCPF(String CPF) {
         this.CPF = CPF;
+    }
+
+    public void setSenha(String Senha) {
+        this.Senha = Senha;
     }
 
     public void setNome(String nome) {

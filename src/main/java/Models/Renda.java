@@ -17,7 +17,7 @@ public class Renda extends BaseEntity{
     private double Valor;
 
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Pessoa Pessoa;
 
     @JoinColumn(name = "pessoa_id")

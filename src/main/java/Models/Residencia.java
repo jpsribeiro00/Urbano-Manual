@@ -16,17 +16,17 @@ public class Residencia extends BaseEntity{
     private String Endereco;
 
     @OneToOne
-    @JoinColumn(name="fk_estoque")
+    @JoinColumn(name="fk_estoque", nullable=true)
     private Estoque Estoque;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Residencia")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Residencia")
     private List<Comodo> Comodos;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Residencia")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Residencia")
     private List<Conta> Contas;
 
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Pessoa Pessoa;
 
     @JoinColumn(name = "pessoa_id")
