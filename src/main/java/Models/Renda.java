@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "renda")
 public class Renda extends BaseEntity{
 
     @Column(nullable=false)

@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "comodo")
 public class Comodo extends BaseEntity {
 
     private String Tamanho;
@@ -19,11 +20,11 @@ public class Comodo extends BaseEntity {
     @Column(nullable=false)
     private Enums.ClassificacaoMovel ClassificacaoMovel;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Comodo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="Comodo")
     private List<Movel> Moveis;
 
     @JoinColumn(name = "residencia_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Residencia Residencia;
 
     @JoinColumn(name = "residencia_id")

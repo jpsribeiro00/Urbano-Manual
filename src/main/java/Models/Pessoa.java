@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "pessoa")
 public class Pessoa extends BaseEntity{
 
     private String CPF;
@@ -19,10 +20,10 @@ public class Pessoa extends BaseEntity{
 
     private String Senha;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Pessoa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="Pessoa")
     private List<Renda> Rendas;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Pessoa")
+    @OneToMany(cascade = CascadeType.ALL , mappedBy="Pessoa")
     private List<Residencia> Residencias;
 
     public Long getId() {

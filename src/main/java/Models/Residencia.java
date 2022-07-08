@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "residencia")
 public class Residencia extends BaseEntity{
 
 
@@ -19,10 +20,10 @@ public class Residencia extends BaseEntity{
     @JoinColumn(name="fk_estoque", nullable=true)
     private Estoque Estoque;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Residencia")
+    @OneToMany(cascade = CascadeType.ALL , mappedBy="Residencia")
     private List<Comodo> Comodos;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy="Residencia")
+    @OneToMany(cascade = CascadeType.ALL , mappedBy="Residencia")
     private List<Conta> Contas;
 
     @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)

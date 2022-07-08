@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "movel")
 public class Movel extends BaseEntity{
 
     @Column(nullable=false)
@@ -17,7 +18,7 @@ public class Movel extends BaseEntity{
     private String Quantidade;
 
     @JoinColumn(name = "comodo_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Comodo.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Comodo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Comodo Comodo;
 
     @JoinColumn(name = "comodo_id")

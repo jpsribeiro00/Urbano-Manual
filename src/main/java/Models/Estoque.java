@@ -7,13 +7,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Table(name = "estoque")
 public class Estoque extends BaseEntity{
 
 
     @OneToOne(cascade = CascadeType.ALL)
     private Residencia Residencia;
 
-    @OneToMany(cascade = { CascadeType.REMOVE }, mappedBy="Estoque")
+    @OneToMany(cascade = CascadeType.ALL , mappedBy="Estoque")
     private List<Produto> Produtos;
 
     public Long getId() {
