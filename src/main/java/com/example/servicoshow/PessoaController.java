@@ -38,6 +38,10 @@ public class PessoaController {
 
     @PutMapping("/pessoa/{id}")
     Pessoa update(@RequestBody Pessoa pessoa, @PathVariable Long id){
+
+        pessoa.getRendas().forEach(e -> pessoa.AddRenda(e));
+        pessoa.getResidencias().forEach(e -> pessoa.AddResidencia(e));
+        
         return pessoaServico.update(pessoa, id);
     }
 

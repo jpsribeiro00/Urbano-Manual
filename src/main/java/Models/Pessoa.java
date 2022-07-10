@@ -21,10 +21,10 @@ public class Pessoa extends BaseEntity{
 
     private String Senha;
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy="Pessoa")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="Pessoa", orphanRemoval=true)
     private List<Renda> Rendas;
 
-    @OneToMany(cascade = CascadeType.PERSIST , mappedBy="Pessoa")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE} , mappedBy="Pessoa", orphanRemoval=true)
     private List<Residencia> Residencias;
 
     public Long getId() {
