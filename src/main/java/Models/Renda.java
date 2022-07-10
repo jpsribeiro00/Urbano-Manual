@@ -1,6 +1,9 @@
 package Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -17,12 +20,14 @@ public class Renda extends BaseEntity{
     @Column(nullable=false)
     private double Valor;
 
-    @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id")
+    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pessoa Pessoa;
 
-    @JoinColumn(name = "pessoa_id")
-    private Long pessoa_id;
+    @JsonInclude()
+    @Transient
+    private Long pessoaId;
 
     public Long getId() {
         return super.getId();
@@ -39,8 +44,9 @@ public class Renda extends BaseEntity{
     public Models.Pessoa getPessoa() {
         return Pessoa;
     }
-    public Long getPessoaId(){
-        return pessoa_id;
+
+    public Long getPessoaID() {
+        return pessoaId;
     }
 
     public void setId(Long id) {
@@ -55,12 +61,11 @@ public class Renda extends BaseEntity{
         Valor = valor;
     }
 
-    public void setPessoaId(Long id){
-        this.pessoa_id = id;
-    }
-    @JsonIgnore
     public void setPessoa(Models.Pessoa pessoa) {
-        setPessoaId(pessoa.getId());
         this.Pessoa = pessoa;
+    }
+
+    public void setPessoaId(Long num){
+        this.pessoaId = num;
     }
 }

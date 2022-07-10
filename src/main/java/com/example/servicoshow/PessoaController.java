@@ -29,6 +29,10 @@ public class PessoaController {
 
     @PostMapping("/pessoa")
     Pessoa create(@RequestBody Pessoa pessoa){
+
+        pessoa.getRendas().forEach(e -> pessoa.AddRenda(e));
+        pessoa.getResidencias().forEach(e -> pessoa.AddResidencia(e));
+
         return pessoaServico.save(pessoa);
     }
 

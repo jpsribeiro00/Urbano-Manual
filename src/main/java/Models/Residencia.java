@@ -1,6 +1,9 @@
 package Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,21 +19,23 @@ public class Residencia extends BaseEntity{
     @Column(nullable=false)
     private String Endereco;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="fk_estoque", nullable=true)
     private Estoque Estoque;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy="Residencia")
+    @OneToMany(cascade = CascadeType.PERSIST , mappedBy="Residencia")
     private List<Comodo> Comodos;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy="Residencia")
+    @OneToMany(cascade = CascadeType.PERSIST , mappedBy="Residencia")
     private List<Conta> Contas;
 
-    @JoinColumn(name = "pessoa_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Pessoa.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "pessoa_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pessoa Pessoa;
 
-    @JoinColumn(name = "pessoa_id")
+    @JsonInclude()
+    @Transient
     private Long pessoa_id;
 
     public Long getId() {
@@ -57,6 +62,7 @@ public class Residencia extends BaseEntity{
     public Models.Pessoa getPessoa() {
         return Pessoa;
     }
+
     public Long getPessoaId(){
         return pessoa_id;
     }
@@ -84,9 +90,9 @@ public class Residencia extends BaseEntity{
     public void setPessoaId(Long id){
         this.pessoa_id = id;
     }
-    @JsonIgnore
+
     public void setPessoa(Models.Pessoa pessoa) {
-        setPessoaId(pessoa.getId());
         this.Pessoa = pessoa;
+        this.pessoa_id = this.Pessoa.getId();
     }
 }

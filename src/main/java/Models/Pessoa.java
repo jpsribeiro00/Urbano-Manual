@@ -1,6 +1,7 @@
 package Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,10 +21,10 @@ public class Pessoa extends BaseEntity{
 
     private String Senha;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="Pessoa")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy="Pessoa")
     private List<Renda> Rendas;
 
-    @OneToMany(cascade = CascadeType.ALL , mappedBy="Pessoa")
+    @OneToMany(cascade = CascadeType.PERSIST , mappedBy="Pessoa")
     private List<Residencia> Residencias;
 
     public Long getId() {
@@ -79,5 +80,31 @@ public class Pessoa extends BaseEntity{
 
     public void setResidencias(List<Residencia> residencias) {
         Residencias = residencias;
+    }
+
+    public void AddRenda(Renda renda){
+        if (renda == null) {
+            return;
+        }
+        renda.setPessoa(this);
+        if (Rendas == null) {
+            Rendas = new ArrayList<Renda>();
+            Rendas.add(renda);
+        } else if (!Rendas.contains(renda)) {
+            Rendas.add(renda);
+        }
+    }
+
+    public void AddResidencia(Residencia residencia){
+        if (residencia == null) {
+            return;
+        }
+        residencia.setPessoa(this);
+        if (Residencias == null) {
+            Residencias = new ArrayList<Residencia>();
+            Residencias.add(residencia);
+        } else if (!Residencias.contains(residencia)) {
+            Residencias.add(residencia);
+        }
     }
 }

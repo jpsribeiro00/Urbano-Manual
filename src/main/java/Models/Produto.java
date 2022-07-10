@@ -1,6 +1,8 @@
 package Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -18,7 +20,8 @@ public class Produto extends BaseEntity {
     private double ValorUnitario;
 
     @JoinColumn(name = "estoque_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Estoque.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Estoque.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Estoque Estoque;
 
     @JoinColumn(name = "estoque_id")

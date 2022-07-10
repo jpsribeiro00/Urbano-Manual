@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/comodo")
 public class ComodoController {
 
     private final ComodoServico comodoServico;

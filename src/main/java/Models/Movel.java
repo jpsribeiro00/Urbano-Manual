@@ -1,6 +1,8 @@
 package Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -18,7 +20,8 @@ public class Movel extends BaseEntity{
     private String Quantidade;
 
     @JoinColumn(name = "comodo_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Comodo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Comodo.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Comodo Comodo;
 
     @JoinColumn(name = "comodo_id")

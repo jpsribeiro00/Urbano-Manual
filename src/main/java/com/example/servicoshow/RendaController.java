@@ -1,6 +1,8 @@
 package com.example.servicoshow;
 
+import Models.Pessoa;
 import Models.Renda;
+import Servicos.PessoaServico;
 import Servicos.RendaServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,12 @@ import java.util.Optional;
 public class RendaController {
 
     private final RendaServico rendaServico;
+    private final PessoaServico pessoaServico;
 
     @Autowired
-    public RendaController(RendaServico rendaServico) {
+    public RendaController(RendaServico rendaServico, PessoaServico pessoaServico) {
         this.rendaServico = rendaServico;
+        this.pessoaServico = pessoaServico;
     }
 
     @GetMapping()
@@ -32,6 +36,8 @@ public class RendaController {
 
     @PostMapping()
     Renda create(@RequestBody Renda renda){
+        renda.setPessoa(pessoaServico.findById(renda.getPessoaID()).get());
+
         return rendaServico.save(renda);
     }
 

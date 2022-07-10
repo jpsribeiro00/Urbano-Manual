@@ -13,15 +13,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "estoque")
 public class Estoque extends BaseEntity{
 
-    @JsonIgnore
-    @JoinColumn(name = "residencia_id", insertable = false, updatable = false)
-    @OneToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "Estoque", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Residencia Residencia;
 
-    @JoinColumn(name = "residencia_id")
-    private Long residencia_id;
-
-    @OneToMany(cascade = CascadeType.ALL , mappedBy="Estoque")
+    @OneToMany(cascade = CascadeType.PERSIST , mappedBy="Estoque")
     private List<Produto> Produtos;
 
     public Long getId() {
@@ -32,9 +28,6 @@ public class Estoque extends BaseEntity{
     public Models.Residencia getResidencia() {
         return Residencia;
     }
-    public Long getResidenciaId(){
-        return residencia_id;
-    }
 
     public List<Produto> getProdutos() {
         return Produtos;
@@ -44,13 +37,8 @@ public class Estoque extends BaseEntity{
         super.setId(id);
     }
 
-    public void setResidenciaId(Long id){
-        this.residencia_id = id;
-    }
-
     @JsonIgnore
     public void setResidencia(Models.Residencia residencia) {
-        setResidenciaId(Residencia.getId());
         this.Residencia = residencia;
     }
 

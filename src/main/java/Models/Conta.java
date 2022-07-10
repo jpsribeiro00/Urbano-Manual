@@ -2,6 +2,8 @@ package Models;
 
 import Enum.Enums;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -21,7 +23,8 @@ public class Conta extends BaseEntity{
     private double Valor;
 
     @JoinColumn(name = "residencia_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Residencia.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Residencia Residencia;
 
     @JoinColumn(name = "residencia_id")
