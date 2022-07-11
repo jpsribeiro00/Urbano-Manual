@@ -20,7 +20,7 @@ public class Post extends BaseEntity {
 
     private String Nome;
 
-    private Long Pessoa_id;
+    private Long PessoaId;
 
     public Long getId() {
         return super.getId();
@@ -42,8 +42,8 @@ public class Post extends BaseEntity {
         return Nome;
     }
 
-    public Long getPessoa_id() {
-        return Pessoa_id;
+    public Long getpessoaId() {
+        return PessoaId;
     }
 
 
@@ -67,8 +67,8 @@ public class Post extends BaseEntity {
         Nome = nome;
     }
 
-    public void setPessoa_id(Long pessoa_id) {
-        Pessoa_id = pessoa_id;
+    public void setpessoaId(Long pessoaId) {
+        PessoaId = pessoaId;
     }
 
 }
